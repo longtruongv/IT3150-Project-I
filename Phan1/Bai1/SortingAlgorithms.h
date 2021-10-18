@@ -39,13 +39,65 @@ void selectionSort(Array a){
 }
 
 //HEAP SORT
+void heapify(int *arr, int leng, int i){
+    int leftChild = 2 * i + 1;
+    int rightChild = 2 * i + 2;
 
+    int largest = i;
+    if (leftChild < leng && arr[leftChild] > arr[largest]) largest = leftChild;
+    if (rightChild < leng && arr[rightChild] > arr[largest]) largest = rightChild;
+
+    if (largest != i){
+        swap(arr + i, arr + largest);
+        heapify(arr, leng, largest);
+    }
+}
+
+void heapSort(Array a){
+    int n = a.leng;
+    for (int i = n / 2 - 1; i >= 0; i--){
+        heapify(a.arr, a.leng, i);
+    }
+
+    for (int i = n - 1; i >= 0; i--){
+        swap(a.arr, a.arr + i);
+
+        heapify(a.arr, i, 0);
+    }
+}
 
 //QUICK SORT
-void quickSort(Array a, int begin, int end){
-    if (begin < end){
+int partition(int *arr, int begin, int end){
+    int pivot = arr[begin];
+    int left = begin + 1;
+    int right = end;
 
+    while (1) {
+        while (left <= right && arr[left] < pivot) left++;
+        while (left <= right && arr[right] > pivot) right--;
+
+        if (left >= right) break;
+
+        swap(arr + left, arr + right);
+        left++;
+        right--;
     }
+
+    swap(arr + begin, arr + right);
+    return right;
+}
+
+void quickSortFunction(int* arr, int begin, int end){
+    if (begin < end){
+        int indexPivot = partition(arr, begin, end);
+
+        quickSortFunction(arr, begin, indexPivot - 1);
+        quickSortFunction(arr, indexPivot + 1, end);
+    }
+}
+
+void quickSort(Array a){
+    quickSortFunction(a.arr, 0, a.leng - 1);
 }
 
 //MERGE SORT
@@ -105,7 +157,5 @@ void mergeSortFunction(int* arr, int begin, int end){
 void mergeSort(Array a){
     mergeSortFunction(a.arr, 0, a.leng - 1);
 }
-
-
 
 #endif
