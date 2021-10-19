@@ -7,8 +7,8 @@
 #include "PrintBoard.h"
 
 //Goc toa do o phia tren ben trai ban co
-//Truc X nam ngang, sang phai, toa do dem tu 0
-//Truc Y nam doc, xuong duoi, toa do dem tu 0
+//Truc Y nam ngang, sang phai, toa do dem tu 0
+//Truc X nam doc, xuong duoi, toa do dem tu 0
 
 int mark[8][8]; //danh dau nhung o da di
 int step[64][2]; //luu lai toa do cac buoc -> X[k]
@@ -17,6 +17,7 @@ int step[64][2]; //luu lai toa do cac buoc -> X[k]
 int nextMove[8][2] = {{+1, -2}, {+2, -1}, {+2, +1}, {+1, +2},
                       {-1, +2}, {-2, +1}, {-2, -1}, {-1, -2}};
 
+//Khoi tao
 void init(int startRow, int startColumn){
     for (int i = 0; i < 8; i++){
         for  (int j = 0; j < 8; j++){
@@ -39,7 +40,7 @@ int isNextMoveValid(int stepIndex, int nextMoveIndex){
 }
 
 //BACKTRACKING
-int try(int k){
+int TRY(int k){
     // for ( [Lan luot tung phuong an] )
     for (int nextMoveIndex = 0; nextMoveIndex < 8; nextMoveIndex++){
         
@@ -61,7 +62,7 @@ int try(int k){
 
         // backtracking(k+1);
         //Khong tiep tuc khi da ra ket qua
-        if (try(k + 1) == 0) return 0;
+        if (TRY(k + 1) == 0) return 0;
 
         //Bo chon phuong an
         mark[ step[k][0] ][ step[k][1] ] = 0;
@@ -88,7 +89,10 @@ int main(){
     } while (startRow < 0 || startRow > 7);
 
     init(startRow, startColumn);
-    try(1);
+
+    printf("\nDang tinh toan...\n");
+    TRY(1);
+    
     return 0;
 }
 
