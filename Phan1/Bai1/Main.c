@@ -92,14 +92,15 @@ int main(){
 
     Array a = inputFunction();
 
-    clock_t start = clock();
+    clock_t start, end;
+    start = clock();
     sortingAlgorithm(a);
-    clock_t end = clock();
+    end = clock();
 
     outputFunction(a);
 
-    double sec = (double) (end - start) / CLOCKS_PER_SEC;
-    printf("\nThuat tuan voi %d phan tu chay trong: %.9lf giay", a.leng, sec);
+    double time_taken = (double) (end - start) / (double)(CLOCKS_PER_SEC);
+    printf("\nThuat toan voi %d phan tu chay trong: %.9lf giay", a.leng, time_taken);
     
     freeArray(a);
     return 0;

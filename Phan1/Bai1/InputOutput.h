@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#ifndef INPUTOUTPUT_H
-#define INPUTOUTPUT_H
+#ifndef INPUT_OUTPUT_H
+#define INPUT_OUTPUT_H
 
 typedef struct Array {
     int leng;
@@ -57,7 +57,7 @@ Array inputRandom(){
     srand(time(NULL));
     for (int i = 0; i < a.leng; i++){
         a.arr[i] = rand();
-        //printf("%d\n", a.arr[i]);
+        // printf("%d\n", a.arr[i]); //Bo comment de in day so random
     }
     
     printf("Random day so thanh cong!\n");
