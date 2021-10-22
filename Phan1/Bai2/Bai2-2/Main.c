@@ -3,12 +3,14 @@
 #include <time.h> // time()
 
 //
-int n;         //So luong thanh pho
-int **graph;   //Chi phi di lai giua 2 thanh pho
-int bestCost;  //Tong chi phi tot nhat
-int currCost;  //Tong chi phi tinh toi thoi diem hien tai
-int *mark;     //Danh dau nhung thanh pho da di
-int *cityList; //Danh sach thu tu cac thanh pho da di
+int n;              //So luong thanh pho
+int **graph;        //Chi phi di lai giua 2 thanh pho
+int minWeight;      //Chi phi di lai nho nhat tu mot thanh pho bat ky ve 0
+int bestCost;       //Tong chi phi tot nhat
+int currCost;       //Tong chi phi tinh toi thoi diem hien tai
+int *mark;          //Danh dau nhung thanh pho da di
+int *cityList;      //Danh sach thu tu cac thanh pho da di
+int *minCityList;   //Danh sach thu tu cac thanh pho voi chi phi nho nhat
 
 void init();
 void end();
@@ -20,26 +22,95 @@ void inputRandom();
 //Vi bai toan nay khong co rang buoc Implicit
 //Nen thuat toan Vet can se giong thuat toan Quay lui
 //Thuat toan Vet can
-
-
-
-
-//Thuat toan Nhanh can
-void TRY(int k){
-    for (int i = 1; i < n; i++){
-        if (k == n){
-            if (currCost + graph[cityList[n-1], 0] < bestCost){
-                
+void tryBruteForce(int k){
+    if (k == n){
+        currCost += graph[cityList[k-1]][0];
+        if (currCost < bestCost){
+            bestCost = currCost;
+            for (int j = 0; j < n; j++){
+                minCityList[j] = cityList[j];
             }
         }
+        currCost -= graph[cityList[k-1]][0];
+        return;
+    }
 
-        if (mark[i] == 1) continue;
+    for (int i = 1; i < n; i++){
+        if (mark[i]) continue;
 
         cityList[k] = i;
+        mark[i] = 1;
+        currCost += graph[cityList[k-1]][i];
+
+        tryBruteForce(k + 1);
+
+        mark[i] = 0;
+        currCost -= graph[cityList[k-1]][i];
     }
 }
 
+void bruteForce(){
+    bestCost = INT_MAX;
+    currCost = 0;
 
+    cityList[0] = 0;
+    mark[0] = 1;
+
+    tryBruteForce(1);
+
+    printf("\nCach di chuyen chi phi nho nhat:\n");
+    for (int i = 0; i < n; i++){
+        printf("%d -> ", minCityList[i]);
+    }
+    printf("0\n");
+}
+
+//////////////////////////
+// Thuat toan Nhanh can //
+//////////////////////////
+void tryBranchAndBound(int k){
+    if (k == n){
+        currCost += graph[cityList[k-1]][0];
+        if (currCost < bestCost){
+            bestCost = currCost;
+            for (int j = 0; j < n; j++){
+                minCityList[j] = cityList[j];
+            }
+        }
+        currCost -= graph[cityList[k-1]][0];
+        return;
+    }
+
+    for (int i = 1; i < n; i++){
+        if (mark[i]) continue;
+
+        cityList[k] = i;
+        mark[i] = 1;
+        currCost += graph[cityList[k-1]][i];
+        
+        if (currCost + minWeight * (n - k + 1) < bestCost)
+            tryBranchAndBound(k + 1);
+
+        mark[i] = 0;
+        currCost -= graph[cityList[k-1]][i];
+    }
+}
+
+void branchAndBound(){
+    bestCost = INT_MAX;
+    currCost = 0;
+
+    cityList[0] = 0;
+    mark[0] = 1;
+
+    tryBranchAndBound(1);
+
+    printf("\nCach di chuyen chi phi nho nhat:\n");
+    for (int i = 0; i < n; i++){
+        printf("%d -> ", minCityList[i]);
+    }
+    printf("0\n");
+}
 
 int main(){
     void (* input)();
@@ -53,7 +124,7 @@ int main(){
     printf("Chon phuong thuc input:\n");
     printf("1 - Nhap vao tu Terminal\n");
     printf("2 - Doc tu file \"input.txt\" \n");
-    printf("3 - Random day so\n");
+    printf("3 - Random\n");
     printf("Khac - Thoat chuong trinh\n");
 
     scanf("%d", &i);
@@ -72,42 +143,69 @@ int main(){
     }
 
     //Chon thuat toan
-    printf("Chon thuat toan:\n");
+    printf("\nChon thuat toan:\n");
     printf("1 - Vet can (Brute Force)\n");
-    printf("2 - Sap xep lua chon (Selection Sort)\n");
+    printf("2 - Nhanh can (Branch and Bound)\n");
     printf("Khac - Thoat chuong trinh\n");
 
     scanf("%d", &i);
     switch (i){
         case 1:
-            //algorithm = bf;
+            algorithm = bruteForce;
             break;
         case 2:
-            //algorithm = bt;
+            algorithm = branchAndBound;
             break;
         default:
             return 0;
     }
 
+    init(input);
+
+    printf("\nDang tinh toan...\n");
+
+    clock_t start, stop;
+    start = clock();
+    algorithm();
+    stop = clock();
+
+    double time_taken = (double) (stop - start) / (double)(CLOCKS_PER_SEC);
+    printf("\nThuat toan voi %d thanh pho chay trong: %.9lf giay", n, time_taken);
+
+    end();
+    return 0;
+} 
+
+void init(void (* input)()){
     input();
-    
 
+    mark = (int *) malloc(n * sizeof(int));
+    cityList = (int *) malloc(n * sizeof(int));
+    minCityList = (int *) malloc(n * sizeof(int));
 
+    minWeight = INT_MAX;
+    for (int i = 0; i < n; i++){
+        mark[i] = 0;
 
+        for (int j = i + 1; j < n; j++){
+            if (graph[i][j] < minWeight) minWeight = graph[i][j];
+        }
+    }
+}
 
-
+void end(){
     for (int i = 0; i < n; i++){
         free(graph[i]);
     }
     free(graph);
+
     free(mark);
     free(cityList);
-
-    return 0;
-} 
+    free(minCityList);
+}
 
 void inputTerminal(){
-    printf("Nhap so thanh pho: ");
+    printf("\nNhap so thanh pho: ");
     scanf("%d", &n);
 
     printf("Nhap ma tran chi phi:\n");
@@ -138,7 +236,7 @@ void inputFile(){
 }
 
 void inputRandom(){
-    printf("Nhap so thanh pho: ");
+    printf("\nNhap so thanh pho: ");
     scanf("%d", &n);
 
     graph = (int **) malloc(n * sizeof(int *));
@@ -148,9 +246,18 @@ void inputRandom(){
 
     srand(time(NULL));
     for (int i = 0; i < n; i++){
+        graph[i][i] = 0;
         for (int j = i + 1; j < n; j++){
             graph[i][j] = rand();
             graph[j][i] = graph[i][j];
         }
+    }
+
+    printf("Ma tran chi phi:\n");
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            printf("%7d", graph[i][j]);
+        }
+        printf("\n");
     }
 }
