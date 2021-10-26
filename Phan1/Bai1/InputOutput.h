@@ -17,7 +17,7 @@ void freeArray(Array a){
 Array inputTerminal(){
     Array a;
 
-    printf("Nhap so phan tu: ");
+    printf("\nNhap so phan tu: ");
     scanf("%d", &a.leng);
 
     printf("\nNhap day so:\n");
@@ -49,26 +49,27 @@ Array inputFile(){
 Array inputRandom(){  
     Array a;
 
-    printf("Nhap so phan tu: ");
+    printf("\nNhap so phan tu: ");
     scanf("%d", &a.leng);
 
-    printf("Day so: ");
+    printf("Day so:\n");
     a.arr = (int *)malloc(a.leng * sizeof(int));
     srand(time(NULL));
     for (int i = 0; i < a.leng; i++){
         a.arr[i] = rand();
-        // printf("%d\n", a.arr[i]); //Bo comment de in day so random
+        printf("%5d ", a.arr[i]); //Bo comment de in day so random
     }
     
-    printf("Random day so thanh cong!\n");
+    printf("\nRandom day so thanh cong!\n");
     return a;
 }
 
 void outputTerminal(Array a){
-    printf("Day so da sap xep:\n");
+    printf("\nDay so da sap xep:\n");
     for (int i = 0; i < a.leng; i++){
-        printf("%d\n", a.arr[i]);
+        printf("%5d ", a.arr[i]);
     }
+    printf("\n");
 }
 
 void outputFile(Array a){

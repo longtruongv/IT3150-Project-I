@@ -1,8 +1,7 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h> // rand()
 #include <time.h> // time()
 
-//
 int n;              //So luong thanh pho
 int **graph;        //Chi phi di lai giua 2 thanh pho
 int minWeight;      //Chi phi di lai nho nhat tu mot thanh pho bat ky ve 0
@@ -19,55 +18,92 @@ void inputTerminal();
 void inputFile();
 void inputRandom();
 
-//Vi bai toan nay khong co rang buoc Implicit
-//Nen thuat toan Vet can se giong thuat toan Quay lui
-//Thuat toan Vet can
-void tryBruteForce(int k){
-    if (k == n){
-        currCost += graph[cityList[k-1]][0];
-        if (currCost < bestCost){
-            bestCost = currCost;
-            for (int j = 0; j < n; j++){
-                minCityList[j] = cityList[j];
-            }
-        }
-        currCost -= graph[cityList[k-1]][0];
-        return;
+
+////////////////////////
+// Thuat toan Vet can //
+////////////////////////
+
+void swap(int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+//Tim ra hoan vi tiep theo cua cityList
+//return 1 neu tim ra hoan vi tiep theo
+//return 0 neu la hoan vi cuoi cung
+int nextPermutation(){
+    //Tim vi tri lon nhat thoa man arr[i] < arr[i+1]
+    int i = n - 2;
+    while (i >= 0 && cityList[i] > cityList[i+1]){
+        i--;
     }
 
-    for (int i = 1; i < n; i++){
-        if (mark[i]) continue;
+    //Neu khong ton tai vi tri -> hoan vi cuoi cung
+    //O day ta chi xet hoan vi phan tu thu 1 toi thu n-1
+    //Phan tu dau tien luon la xuat phat nen khong xet hoan vi
+    if (i == 0) return 0;
 
-        cityList[k] = i;
-        mark[i] = 1;
-        currCost += graph[cityList[k-1]][i];
-
-        tryBruteForce(k + 1);
-
-        mark[i] = 0;
-        currCost -= graph[cityList[k-1]][i];
+    //Tim vi tri lon nhat ma gia tri lon hon gia tri tai i
+    int j = n - 1;
+    while (cityList[j] <= cityList[i]){
+        j--;
     }
+
+    //Doi cho gia tri o 2 vi tri tren
+    swap(cityList + i, cityList + j);
+
+    //Tu sau vi tri i o tren, ta lat nguoc cac gia tri
+    i++; j = n - 1;
+    while (i < j){
+        swap(cityList + i, cityList + j);
+        i++; j--;
+    }
+
+    //Tim duoc hoan vi tiep theo
+    return 1;
 }
 
 void bruteForce(){
     bestCost = INT_MAX;
     currCost = 0;
 
-    cityList[0] = 0;
-    mark[0] = 1;
+    for (int i = 0; i < n; i++){
+        cityList[i] = i;
+    }
 
-    tryBruteForce(1);
+    do {
+        //Tinh toan chi phi theo mot hoan vi
+        for (int i = 0; i < n - 1; i++){
+            currCost += graph[ cityList[i] ][ cityList[i + 1] ];
+        }
+        currCost += graph[ cityList[n-1] ][0];
 
-    printf("\nCach di chuyen chi phi nho nhat:\n");
+        //Kiem tra co phai chi phi toi uu
+        if (currCost < bestCost){
+            bestCost = currCost;
+            for (int j = 0; j < n; j++){
+                minCityList[j] = cityList[j];
+            }
+        }
+
+        currCost = 0;
+    } while (nextPermutation());
+    
+    printf("\nChi phi nho nhat: %d\n", bestCost);
+    printf("Cach di chuyen chi phi nho nhat:\n");
     for (int i = 0; i < n; i++){
         printf("%d -> ", minCityList[i]);
     }
     printf("0\n");
 }
+//end thuat toan Vet can
+
 
 //////////////////////////
 // Thuat toan Nhanh can //
 //////////////////////////
+
 void tryBranchAndBound(int k){
     if (k == n){
         currCost += graph[cityList[k-1]][0];
@@ -104,13 +140,16 @@ void branchAndBound(){
     mark[0] = 1;
 
     tryBranchAndBound(1);
-
-    printf("\nCach di chuyen chi phi nho nhat:\n");
+    
+    printf("\nChi phi nho nhat: %d\n", bestCost);
+    printf("Cach di chuyen chi phi nho nhat:\n");
     for (int i = 0; i < n; i++){
         printf("%d -> ", minCityList[i]);
     }
     printf("0\n");
 }
+//end thuat toan Nhanh can
+
 
 int main(){
     void (* input)();

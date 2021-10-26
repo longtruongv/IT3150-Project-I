@@ -10,20 +10,25 @@ void swap(int *a, int *b){
     *b = temp;
 }
 
-//BUBBLE SORT
+/////////////////
+// BUBBLE SORT //
+/////////////////
 void bubbleSort(Array a){
     int n = a.leng; //Giam thoi gian truy cap
 
-    for (int i = 0; i < n - 1; i++){
-        for (int j = i + 1; j < n; j++){
-            if (a.arr[i] > a.arr[j]){
-                swap(a.arr + i, a.arr + j);
+    for (int i = n - 1; i > 0; i--){
+        for (int j = 0; j < i; j++){
+            if (a.arr[j] > a.arr[j + 1]){
+                swap(a.arr + j, a.arr + j + 1);
             }
         }
     }
 }
 
-//SELECTION SORT
+
+////////////////////
+// SELECTION SORT //
+////////////////////
 void selectionSort(Array a){
     int n = a.leng; //Giam thoi gian truy cap
 
@@ -38,7 +43,10 @@ void selectionSort(Array a){
     }
 }
 
-//HEAP SORT
+
+///////////////
+// HEAP SORT //
+///////////////
 void heapify(int *arr, int leng, int i){
     int leftChild = 2 * i + 1;
     int rightChild = 2 * i + 2;
@@ -65,8 +73,12 @@ void heapSort(Array a){
         heapify(a.arr, i, 0);
     }
 }
+//end Heap Sort
 
-//QUICK SORT
+
+////////////////
+// QUICK SORT //
+////////////////
 int partition(int *arr, int begin, int end){
     int pivot = arr[begin];
     int left = begin + 1;
@@ -99,8 +111,12 @@ void quickSortFunction(int* arr, int begin, int end){
 void quickSort(Array a){
     quickSortFunction(a.arr, 0, a.leng - 1);
 }
+//end Quick Sort
 
-//MERGE SORT
+
+////////////////
+// MERGE SORT //
+////////////////
 void merge(int *arr, int begin, int middle, int end){
     int firstLeng = middle - begin + 1;
     int *firstArr = (int *)malloc(firstLeng * sizeof(int));
@@ -157,5 +173,6 @@ void mergeSortFunction(int* arr, int begin, int end){
 void mergeSort(Array a){
     mergeSortFunction(a.arr, 0, a.leng - 1);
 }
+//end Merge Sort
 
 #endif

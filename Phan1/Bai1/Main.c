@@ -36,9 +36,7 @@ int main(){
     }
 
     //Chon phuong thuc output
-    system("cls");
-
-    printf("Chon phuong thuc output:\n");
+    printf("\nChon phuong thuc output:\n");
     printf("1 - In ra Terminal\n");
     printf("2 - Xuat ra file \"output.txt\" \n");
     printf("Khac - Thoat chuong trinh\n");
@@ -56,9 +54,7 @@ int main(){
     }
 
     //Chon thuat toan sap xep
-    system("cls");
-
-    printf("Chon thuat toan sap xep:\n");
+    printf("\nChon thuat toan sap xep:\n");
     printf("1 - Sap xep noi bot (Bubble Sort)\n");
     printf("2 - Sap xep lua chon (Selection Sort)\n");
     printf("3 - Sap xep vun dong (Heap Sort)\n");
@@ -88,9 +84,9 @@ int main(){
     }
 
     //Thuc hien chuong trinh chinh
-    system("cls");
-
     Array a = inputFunction();
+
+    printf("\nDang tinh toan...\n");
 
     clock_t start, end;
     start = clock();
@@ -99,8 +95,8 @@ int main(){
 
     outputFunction(a);
 
-    double time_taken = (double) (end - start) / (double)(CLOCKS_PER_SEC);
-    printf("\nThuat toan voi %d phan tu chay trong: %.9lf giay", a.leng, time_taken);
+    double time_taken = (double) (end - start) / CLOCKS_PER_SEC;
+    printf("\nThuat toan voi %d phan tu chay trong: %.6lf giay", a.leng, time_taken);
     
     freeArray(a);
     return 0;

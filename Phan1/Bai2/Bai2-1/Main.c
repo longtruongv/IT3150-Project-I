@@ -14,7 +14,7 @@
 int mark[8][8]; //danh dau nhung o da di
 int step[64][2]; //luu lai toa do cac buoc -> X[k]
 
-//Vi tri cac buoc di tiep theo so voi hien tai
+//Vi tri cac buoc di tiep theo so voi hien tai -> D
 int nextMove[8][2] = {{+1, -2}, {+2, -1}, {+2, +1}, {+1, +2},
                       {-1, +2}, {-2, +1}, {-2, -1}, {-1, -2}};
 
@@ -45,16 +45,15 @@ int isNextMoveValid(int stepIndex, int nextMoveIndex){
 
 //BACKTRACKING
 int TRY(int k){
+    // if ( [Thanh cong] ) [Dua ra ket qua]; 
+    if (k == 64){
+        printBoard();
+        printf("\nTim duong thanh cong!\n");
+        return 0;
+    }
+
     // for ( [Lan luot tung phuong an] )
     for (int nextMoveIndex = 0; nextMoveIndex < 8; nextMoveIndex++){
-        
-        // if ( [Thanh cong] ) [Dua ra ket qua]; 
-        if (k == 64){
-            printBoard();
-            printf("\nTim duong thanh cong!\n");
-            return 0;
-        }
-        
         // if ( [Phuong an chap nhan duoc] )
         if (!isNextMoveValid(k - 1, nextMoveIndex)) continue;
 
