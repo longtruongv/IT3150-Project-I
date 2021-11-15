@@ -2,13 +2,7 @@
 #include <stdlib.h>
 #include <time.h> // time()
 
-#ifndef INPUT_OUTPUT_H
-#define INPUT_OUTPUT_H
-
-typedef struct Array {
-    int leng;
-    int *arr;
-} Array;
+#include "HeaderBai1.h"
 
 void freeArray(Array a){
     free(a.arr);
@@ -83,5 +77,3 @@ void outputFile(Array a){
     printf("Xuat ra file \"output.txt\" thanh cong!\n");
     fclose(file);
 }
-
-#endif

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h> //system()
 #include <time.h> //clock()
-#include "InputOutput.h"
-#include "SortingAlgorithms.h"
+
+#include "HeaderBai1.h"
 
 int main(){
     Array (* inputFunction)();

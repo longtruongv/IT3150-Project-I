@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include "inputoutput.h"
+#include <stdlib.h>
 
-#ifndef SORTING_ALGORITHMS_H
-#define SORTING_ALGORITHMS_H
+#include "HeaderBai1.h"
 
 void swap(int *a, int *b){
     int temp = *a;
@@ -174,5 +173,3 @@ void mergeSort(Array a){
     mergeSortFunction(a.arr, 0, a.leng - 1);
 }
 //end Merge Sort
-
-#endif
