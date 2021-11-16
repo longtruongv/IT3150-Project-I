@@ -50,15 +50,17 @@ void insertWordToLinkedList(char *str){
 
     if (linkedListHead == NULL || strcmp(linkedListHead->keyWord, str) > 0){
         linkedListHead = makeNewNode(str, NULL, linkedListHead);
+    } else if (strcmp(linkedListHead->keyWord, str) == 0){
+        insertLineToWord(linkedListHead);
     } else {
         pNode = linkedListHead;
 
-        while (pNode->next != NULL && strcmp(pNode->keyWord, str) < 0){
+        while (pNode->next != NULL && strcmp(pNode->next->keyWord, str) < 0){
             pNode = pNode->next;
         }
 
-        if (strcmp(pNode->keyWord, str) == 0){
-            insertLineToWord(pNode);
+        if (pNode->next != NULL && strcmp(pNode->next->keyWord, str) == 0){
+            insertLineToWord(pNode->next);
         } else {
             makeNewNode(str, pNode, pNode->next);
         }
@@ -68,19 +70,33 @@ void insertWordToLinkedList(char *str){
 
 //PRINT
 void printLinkedList(){
+    soLuongTu = 0;
+    soLuongTuLoai = 0;
+
+    int countingLine = 0;
     Node *pNode = linkedListHead;
     while (pNode != NULL){
-        printf("%s %d", pNode->keyWord, pNode->count);
+        soLuongTu += pNode->count;
+        soLuongTuLoai++;
+
+        printf("%-31s %d", pNode->keyWord, pNode->count);
 
         NumNode *pNumNode = pNode->firstLine;
         while (pNumNode != NULL){
             printf(", %d", pNumNode->num);
+            countingLine++;
             pNumNode = pNumNode->next;
         }
         printf("\n");
 
+        // if (countingLine > pNode->count){
+        //     insertTXHN1D(pNode->keyWord);
+        // }
         pNode = pNode->next;
     }
+
+    printf("\nSo luong tu: %d\nSo luong tu khac loai: %d\n", soLuongTu, soLuongTuLoai);
+    printTXHN1D();
 }
 
 //FREE

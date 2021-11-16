@@ -22,7 +22,7 @@ int main(){
     scanf("%d", &i);
     switch (i){
         case 1:
-            strcpy(inputFileName, "vb.txt");
+            strcpy(inputFileName, "alice.txt");
             break;
         default:
             getchar();

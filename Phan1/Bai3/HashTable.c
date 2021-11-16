@@ -22,15 +22,17 @@ void insertWordToHashTable(char *str){
     
     if (hashTable[hv] == NULL || strcmp(hashTable[hv]->keyWord, str) > 0){
         hashTable[hv] = makeNewNode(str, NULL, hashTable[hv]);
+    } else if (strcmp(hashTable[hv]->keyWord, str) == 0){
+        insertLineToWord(hashTable[hv]);
     } else {
         pNode = hashTable[hv];
 
-        while (pNode->next != NULL && strcmp(pNode->keyWord, str) < 0){
+        while (pNode->next != NULL && strcmp(pNode->next->keyWord, str) < 0){
             pNode = pNode->next;
         }
 
-        if (strcmp(pNode->keyWord, str) == 0){
-            insertLineToWord(pNode);
+        if (pNode->next != NULL && strcmp(pNode->next->keyWord, str) == 0){
+            insertLineToWord(pNode->next);
         } else {
             makeNewNode(str, pNode, pNode->next);
         }
@@ -39,11 +41,18 @@ void insertWordToHashTable(char *str){
 
 //PRINT
 void printHashTable(){
-    int i;
+    soLuongTu = 0;
+    soLuongTuLoai = 0;
+
     for (int i = 0; i < 100; i++){
         Node *pNode = hashTable[i];
+
+        if (pNode != NULL) printf("\n%d\n", i);
         while (pNode != NULL){
-            printf("%s %d", pNode->keyWord, pNode->count);
+            soLuongTu += pNode->count;
+            soLuongTuLoai++;
+
+            printf("%-31s %d", pNode->keyWord, pNode->count);
 
             NumNode *pNumNode = pNode->firstLine;
             while (pNumNode != NULL){
@@ -55,6 +64,8 @@ void printHashTable(){
             pNode = pNode->next;
         }
     }
+
+    printf("\nSo luong tu: %d\nSo luong tu khac loai: %d\n", soLuongTu, soLuongTuLoai);
 }
 
 //FREE

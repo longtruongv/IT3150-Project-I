@@ -9,11 +9,23 @@ typedef struct NumberNode {
 } NumNode;
 
 extern int lineCount;
+extern int soLuongTu, soLuongTuLoai;
 
 void init(char *inputFileName, void (* initStruct)());
 void end(void (* endStruct)());
 
 void processing(void (* insertFunction)(char *));
+
+typedef struct tuXuatHienNhieu1Dong{
+    char keyWord[WORD_SIZE];
+    struct tuXuatHienNhieu1Dong *next;    
+} TXHN1D;
+
+extern TXHN1D *dsTXHN1D;
+extern TXHN1D *lastTXHN1D;
+
+void insertTXHN1D();
+void printTXHN1D();
 
 #endif
 

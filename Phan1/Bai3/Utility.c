@@ -7,6 +7,10 @@
 
 //DECLARE
 int lineCount = 1;
+int soLuongTu = 0, soLuongTuLoai = 0;
+TXHN1D *dsTXHN1D = NULL;
+TXHN1D *lastTXHN1D = NULL;
+
 FILE *inputFile, *stopWordFile;
 char c;
 char word[WORD_SIZE], stopWord[WORD_SIZE];
@@ -16,7 +20,7 @@ int isPrevAStopPunctuation = 0;
 //FUNCTIONS
 void init(char *inputFileName, void (* initStruct)()){
     inputFile = fopen(inputFileName, "r");
-    stopWordFile = fopen("stopw.txt", "r");
+    stopWordFile = fopen("stop_words_english.txt", "r");
 
     if (inputFile == NULL || stopWord == NULL){
         printf("\nFILE KHONG TON TAI!\n");
@@ -28,10 +32,12 @@ void init(char *inputFileName, void (* initStruct)()){
     initStruct();
 }
 
+void endTXHN1D();
 void end(void (* endStruct)()){
     fclose(inputFile);
     fclose(stopWordFile);
     endStruct();
+    endTXHN1D();
 }
 
 int isStopWord(char *lowerCaseWord){
@@ -78,5 +84,43 @@ void processing(void (* insertFunc)(char *)){
                 isPrevAStopPunctuation = 1;
             }
         }
+    }
+}
+
+
+
+void insertTXHN1D(char *keyWord){
+    TXHN1D *newTXHN1D;
+    strcpy(newTXHN1D->keyWord, keyWord);
+    newTXHN1D->next = NULL;
+
+    if (dsTXHN1D == NULL) {
+        dsTXHN1D = newTXHN1D;
+    } else {
+        lastTXHN1D->next = newTXHN1D;
+    }
+
+    lastTXHN1D = newTXHN1D;
+}
+
+void endTXHN1D(){
+    TXHN1D *pCurr = dsTXHN1D, *pNext = NULL;
+
+    while (pCurr != NULL){
+        pNext = pCurr->next;
+        free(pCurr);
+        pCurr = pNext;
+    }
+
+    dsTXHN1D = NULL;
+}
+
+void printTXHN1D(){
+    TXHN1D *ptr = dsTXHN1D;
+    printf("\nDanh sach cac tu xuat hien nhieu 1 dong:\n");
+
+    while (ptr != NULL){
+        printf ("%-31s\n", ptr->keyWord);
+        ptr = ptr->next;
     }
 }
