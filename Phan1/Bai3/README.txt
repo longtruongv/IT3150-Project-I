@@ -1,2 +1,2 @@
-strcmp(const char * s1, const char * s2)
-isalpha(char c);
+Lệnh biên dịch: gcc *.c -o Main.exe
+Lệnh thực thi: ./Main.exe
