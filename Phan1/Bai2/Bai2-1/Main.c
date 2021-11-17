@@ -111,13 +111,13 @@ void printBoard(){
 
     int stepIndex = 0; //Chi so buoc di hien tai
 
-    char board[8][8]; //Danh dau cac buoc di tren ban co
+    int board[8][8]; //Danh dau cac buoc di tren ban co
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){  
-            board[i][j] = ' ';
+            board[i][j] = 0;
         }
 
-        board[ step[0][0] ][ step[0][1] ] = 'X';
+        board[ step[0][0] ][ step[0][1] ] = 1;
     }
     
     while (stepIndex < 64){
@@ -133,7 +133,7 @@ void printBoard(){
                 printf("%d  ", row + 1);
 
                 //in quan co vao day
-                printf("  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  \n",
+                printf(" %2d  | %2d  | %2d  | %2d  | %2d  | %2d  | %2d  | %2d  \n",
                     board[row][0], board[row][1], board[row][2], board[row][3],
                     board[row][4], board[row][5], board[row][6], board[row][7]);
 
@@ -148,7 +148,7 @@ void printBoard(){
         row = 0;
 
         stepIndex++;
-        board[ step[stepIndex][0] ][ step[stepIndex][1] ] = 'X';
+        board[ step[stepIndex][0] ][ step[stepIndex][1] ] = stepIndex + 1;
 
         if (a){
             system("pause");

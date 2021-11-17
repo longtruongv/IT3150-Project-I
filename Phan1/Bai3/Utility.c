@@ -90,7 +90,7 @@ void processing(void (* insertFunc)(char *)){
 
 
 void insertTXHN1D(char *keyWord){
-    TXHN1D *newTXHN1D;
+    TXHN1D *newTXHN1D = (TXHN1D *) malloc(sizeof(TXHN1D));
     strcpy(newTXHN1D->keyWord, keyWord);
     newTXHN1D->next = NULL;
 

@@ -73,11 +73,11 @@ void printLinkedList(){
     soLuongTu = 0;
     soLuongTuLoai = 0;
 
-    int countingLine = 0;
     Node *pNode = linkedListHead;
     while (pNode != NULL){
         soLuongTu += pNode->count;
         soLuongTuLoai++;
+        int countingLine = 0;
 
         printf("%-31s %d", pNode->keyWord, pNode->count);
 
@@ -89,9 +89,10 @@ void printLinkedList(){
         }
         printf("\n");
 
-        // if (countingLine > pNode->count){
-        //     insertTXHN1D(pNode->keyWord);
-        // }
+        if (countingLine < pNode->count){
+            insertTXHN1D(pNode->keyWord);
+        }
+
         pNode = pNode->next;
     }
 

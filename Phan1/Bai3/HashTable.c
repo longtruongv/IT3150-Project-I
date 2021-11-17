@@ -51,21 +51,28 @@ void printHashTable(){
         while (pNode != NULL){
             soLuongTu += pNode->count;
             soLuongTuLoai++;
+            int countingLine = 0;
 
             printf("%-31s %d", pNode->keyWord, pNode->count);
 
             NumNode *pNumNode = pNode->firstLine;
             while (pNumNode != NULL){
                 printf(", %d", pNumNode->num);
+                countingLine++;
                 pNumNode = pNumNode->next;
             }
             printf("\n");
+
+            if (countingLine < pNode->count){
+                insertTXHN1D(pNode->keyWord);
+            }
 
             pNode = pNode->next;
         }
     }
 
     printf("\nSo luong tu: %d\nSo luong tu khac loai: %d\n", soLuongTu, soLuongTuLoai);
+    printTXHN1D();
 }
 
 //FREE

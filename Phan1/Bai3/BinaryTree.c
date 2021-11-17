@@ -88,14 +88,20 @@ void printTreeNode(TreeNode *pTreeNode){
 
     soLuongTu += pTreeNode->count;
     soLuongTuLoai++;
+    int countingLine = 0;
     
     printf("%-31s %d", pTreeNode->keyWord, pTreeNode->count);
     NumNode *pNumNode = pTreeNode->firstLine;
     while (pNumNode != NULL){
         printf(", %d", pNumNode->num);
+        countingLine++;
         pNumNode = pNumNode->next;
     }
     printf("\n");
+
+    if (countingLine < pTreeNode->count){
+        insertTXHN1D(pTreeNode->keyWord);
+    }
 
     printTreeNode(pTreeNode->rightChild);
 }
@@ -107,6 +113,7 @@ void printBinaryTree(){
     printTreeNode(treeRoot);
 
     printf("\nSo luong tu: %d\nSo luong tu khac loai: %d\n", soLuongTu, soLuongTuLoai);
+    printTXHN1D();
 }
 
 //FREE

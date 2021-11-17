@@ -17,7 +17,7 @@ void bubbleSort(Array a){
 
     for (int i = n - 1; i > 0; i--){
         for (int j = 0; j < i; j++){
-            if (a.arr[j] > a.arr[j + 1]){
+            if (a.arr[j] < a.arr[j + 1]){
                 swap(a.arr + j, a.arr + j + 1);
             }
         }
@@ -35,7 +35,7 @@ void selectionSort(Array a){
         int indexMin = i;
 
         for (int j = i + 1; j < n; j++){
-            if (a.arr[j] < a.arr[indexMin]) indexMin = j;
+            if (a.arr[j] > a.arr[indexMin]) indexMin = j;
         }
 
         if (indexMin != i) swap(a.arr + i, a.arr + indexMin);
@@ -51,8 +51,8 @@ void heapify(int *arr, int leng, int i){
     int rightChild = 2 * i + 2;
 
     int largest = i;
-    if (leftChild < leng && arr[leftChild] > arr[largest]) largest = leftChild;
-    if (rightChild < leng && arr[rightChild] > arr[largest]) largest = rightChild;
+    if (leftChild < leng && arr[leftChild] < arr[largest]) largest = leftChild;
+    if (rightChild < leng && arr[rightChild] < arr[largest]) largest = rightChild;
 
     if (largest != i){
         swap(arr + i, arr + largest);
@@ -84,8 +84,8 @@ int partition(int *arr, int begin, int end){
     int right = end;
 
     while (1) {
-        while (left <= right && arr[left] < pivot) left++;
-        while (left <= right && arr[right] > pivot) right--;
+        while (left <= right && arr[left] > pivot) left++;
+        while (left <= right && arr[right] < pivot) right--;
 
         if (left >= right) break;
 
@@ -145,7 +145,7 @@ void merge(int *arr, int begin, int middle, int end){
             continue;
         }
 
-        if (firstArr[firstPtr] < secondArr[secondPtr]){
+        if (firstArr[firstPtr] > secondArr[secondPtr]){
             arr[begin + i] = firstArr[firstPtr];
             firstPtr++;
         } else {

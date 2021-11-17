@@ -4,7 +4,7 @@
 
 int n;              //So luong thanh pho
 int **graph;        //Chi phi di lai giua 2 thanh pho
-int minWeight;      //Chi phi di lai nho nhat tu mot thanh pho bat ky ve 0
+int maxWeight;      //Chi phi di lai nho nhat tu mot thanh pho bat ky ve 0
 int bestCost;       //Tong chi phi tot nhat
 int currCost;       //Tong chi phi tinh toi thoi diem hien tai
 int *mark;          //Danh dau nhung thanh pho da di
@@ -77,7 +77,7 @@ void bruteForce(){
         for (int i = 0; i < n - 1; i++){
             currCost += graph[ cityList[i] ][ cityList[i + 1] ];
         }
-        currCost += graph[ cityList[n-1] ][0];
+        // currCost += graph[ cityList[n-1] ][0];
 
         //Kiem tra co phai chi phi toi uu
         if (currCost < bestCost){
@@ -93,9 +93,9 @@ void bruteForce(){
     printf("\nChi phi nho nhat: %d\n", bestCost);
     printf("Cach di chuyen chi phi nho nhat:\n");
     for (int i = 0; i < n; i++){
-        printf("%d -> ", minCityList[i]);
+        printf("%d -> ", minCityList[i] + 1);
     }
-    printf("0\n");
+    // printf("0\n");
 }
 //end thuat toan Vet can
 
@@ -107,7 +107,7 @@ void bruteForce(){
 void tryBranchAndBound(int k){
     if (k == n){
         currCost += graph[cityList[k-1]][0];
-        if (currCost < bestCost){
+        if (currCost > bestCost){
             bestCost = currCost;
             for (int j = 0; j < n; j++){
                 minCityList[j] = cityList[j];
@@ -124,7 +124,7 @@ void tryBranchAndBound(int k){
         mark[i] = 1;
         currCost += graph[cityList[k-1]][i];
         
-        if (currCost + minWeight * (n - k + 1) < bestCost)
+        if (currCost + maxWeight * (n - k + 1) > bestCost)
             tryBranchAndBound(k + 1);
 
         mark[i] = 0;
@@ -133,7 +133,7 @@ void tryBranchAndBound(int k){
 }
 
 void branchAndBound(){
-    bestCost = INT_MAX;
+    bestCost = 0;
     currCost = 0;
 
     cityList[0] = 0;
@@ -144,9 +144,9 @@ void branchAndBound(){
     printf("\nChi phi nho nhat: %d\n", bestCost);
     printf("Cach di chuyen chi phi nho nhat:\n");
     for (int i = 0; i < n; i++){
-        printf("%d -> ", minCityList[i]);
+        printf("%d -> ", minCityList[i] + 1);
     }
-    printf("0\n");
+    printf("1\n");
 }
 //end thuat toan Nhanh can
 
@@ -222,12 +222,12 @@ void init(void (* input)()){
     cityList = (int *) malloc(n * sizeof(int));
     minCityList = (int *) malloc(n * sizeof(int));
 
-    minWeight = INT_MAX;
+    maxWeight = 0;
     for (int i = 0; i < n; i++){
         mark[i] = 0;
 
         for (int j = i + 1; j < n; j++){
-            if (graph[i][j] < minWeight) minWeight = graph[i][j];
+            if (graph[i][j] > maxWeight) maxWeight = graph[i][j];
         }
     }
 }
@@ -259,7 +259,7 @@ void inputTerminal(){
 
 void inputFile(){
     FILE *file;
-    file = fopen("input.txt", "r");
+    file = fopen("matran.txt", "r");
 
     fscanf(file, "%d", &n);
 
