@@ -86,7 +86,7 @@ void printTreeNode(TreeNode *pTreeNode){
 
     printTreeNode(pTreeNode->leftChild);
 
-    printf("%s %d", pTreeNode->keyWord, pTreeNode->count);
+    printf("%-31s %d", pTreeNode->keyWord, pTreeNode->count);
     NumNode *pNumNode = pTreeNode->firstLine;
     while (pNumNode != NULL){
         printf(", %d", pNumNode->num);

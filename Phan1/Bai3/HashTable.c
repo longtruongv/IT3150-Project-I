@@ -5,7 +5,8 @@
 #include "HeaderBai3.h"
 
 //DECLARE
-Node *hashTable[100];
+#define HASH_NUM 100
+Node *hashTable[HASH_NUM];
 
 //ALGORITHM
 int hashValue(char *str){
@@ -13,7 +14,7 @@ int hashValue(char *str){
     for (i = 0; str[i] != '\0'; i++){
         sum += str[i];
     }
-    return sum % 100;
+    return sum % HASH_NUM;
 }
 
 void insertWordToHashTable(char *str){
@@ -40,10 +41,13 @@ void insertWordToHashTable(char *str){
 //PRINT
 void printHashTable(){
     int i;
-    for (int i = 0; i < 100; i++){
+
+    for (int i = 0; i < HASH_NUM; i++){
         Node *pNode = hashTable[i];
+
+        if (pNode != NULL) printf("\n%d\n", i);
         while (pNode != NULL){
-            printf("%s %d", pNode->keyWord, pNode->count);
+            printf("%-31s %d", pNode->keyWord, pNode->count);
 
             NumNode *pNumNode = pNode->firstLine;
             while (pNumNode != NULL){
@@ -60,7 +64,7 @@ void printHashTable(){
 //FREE
 void freeHashTable(){
     int i;
-    for (i = 0; i < 100; i++){
+    for (i = 0; i < HASH_NUM; i++){
         Node *pCurrNode = hashTable[i];
         Node *pNextNode = NULL;
 
@@ -77,7 +81,7 @@ void freeHashTable(){
 //INIT END
 void initHashTable(){
     int i;
-    for (i = 0; i < 100; i++){
+    for (i = 0; i < HASH_NUM; i++){
         hashTable[i] = NULL;
     }
 }

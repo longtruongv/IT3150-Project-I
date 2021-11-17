@@ -93,9 +93,9 @@ void bruteForce(){
     printf("\nChi phi nho nhat: %d\n", bestCost);
     printf("Cach di chuyen chi phi nho nhat:\n");
     for (int i = 0; i < n; i++){
-        printf("%d -> ", minCityList[i]);
+        printf("%d -> ", minCityList[i] + 1);
     }
-    printf("0\n");
+    printf("1\n");
 }
 //end thuat toan Vet can
 
@@ -144,9 +144,9 @@ void branchAndBound(){
     printf("\nChi phi nho nhat: %d\n", bestCost);
     printf("Cach di chuyen chi phi nho nhat:\n");
     for (int i = 0; i < n; i++){
-        printf("%d -> ", minCityList[i]);
+        printf("%d -> ", minCityList[i] + 1);
     }
-    printf("0\n");
+    printf("1\n");
 }
 //end thuat toan Nhanh can
 

@@ -50,15 +50,17 @@ void insertWordToLinkedList(char *str){
 
     if (linkedListHead == NULL || strcmp(linkedListHead->keyWord, str) > 0){
         linkedListHead = makeNewNode(str, NULL, linkedListHead);
+    } else if (strcmp(linkedListHead->keyWord, str) == 0){
+        insertLineToWord(linkedListHead);
     } else {
         pNode = linkedListHead;
 
-        while (pNode->next != NULL && strcmp(pNode->keyWord, str) < 0){
+        while (pNode->next != NULL && strcmp(pNode->next->keyWord, str) < 0){
             pNode = pNode->next;
         }
 
-        if (strcmp(pNode->keyWord, str) == 0){
-            insertLineToWord(pNode);
+        if (pNode->next != NULL && strcmp(pNode->next->keyWord, str) == 0){
+            insertLineToWord(pNode->next);
         } else {
             makeNewNode(str, pNode, pNode->next);
         }
@@ -70,7 +72,7 @@ void insertWordToLinkedList(char *str){
 void printLinkedList(){
     Node *pNode = linkedListHead;
     while (pNode != NULL){
-        printf("%s %d", pNode->keyWord, pNode->count);
+        printf("%-31s %d", pNode->keyWord, pNode->count);
 
         NumNode *pNumNode = pNode->firstLine;
         while (pNumNode != NULL){
