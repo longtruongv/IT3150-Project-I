@@ -19,8 +19,8 @@
   - Vét cạn (Brute force).
   - Quay lui có nhánh cận (Branch and Bound).
   
-### Bài 3: Liệt kê từ khóa
-  Mô tả: Cho một file văn bản, yêu cầu in ra danh sách các từ khóa (không phải 'stop word' hay tên riêng), số lần xuất hiện từ đó và các dòng mà từ đó xuất hiện.
+### Bài 3: Lập bảng chỉ mục
+  Mô tả: Cho một file văn bản, yêu cầu in ra bảng chỉ mục gồm danh sách các từ khóa (không phải 'stop word' hay tên riêng), số lần xuất hiện từ đó và các dòng mà từ đó xuất hiện.
   
   Cấu trúc dữ liệu:
   - Danh sách liên kết (Linked List).
