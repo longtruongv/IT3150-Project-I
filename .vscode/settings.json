@@ -1,6 +1,5 @@
 {
     "files.associations": {
-        "hello.h": "c",
         "sortingalgorithms.h": "c",
         "*.tcc": "cpp",
         "headerbai3.h": "c",
