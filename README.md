@@ -9,7 +9,7 @@
 #### 2.2. Bài toán Người đi du lịch
   - Vét cạn: Không trở về điểm xuất phát.
   - Quay lui có nhánh cận: Tìm đường với chi phí lớn nhất.
-### Bài 3: Liệt kê từ khóa
+### Bài 3: Lập bảng chỉ mục
   - In ra tổng số từ đã thêm vào danh sách (từ giống nhau đếm nhiều lần).
   - In ra số lượng từ khác nhau trong danh sách.
   - In ra danh sách cách từ có nhiều hơn 1 lần xuất hiện trên 1 dòng.
