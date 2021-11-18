@@ -51,7 +51,7 @@ Array inputRandom(){
     srand(time(NULL));
     for (int i = 0; i < a.leng; i++){
         a.arr[i] = rand();
-        printf("%5d ", a.arr[i]); //Bo comment de in day so random
+        printf("%5d ", a.arr[i]);
     }
     
     printf("\nRandom day so thanh cong!\n");

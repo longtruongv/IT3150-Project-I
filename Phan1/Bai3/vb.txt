@@ -1,8 +1,30 @@
-Taylor Swift officially broke the internet Friday.
-Not only did she release her re-recording of her 2012 album "Red" -- this time it's called "Red (Taylor's Version)" -- but she dropped a short film that has her fans' jaws on the floor.
-It's called "All Too Well," named after a track of the same name off her album. For years fans have assumed that the song, which tells the story of a breakup, was about her whirlwind, short-lived romance with actor Jake Gyllenhaal in 2010.
-Now that the nearly 15 minute short film is out, the speculation that it was about Gyllenhaal appears to have been solidified in the minds of her fans, who call themselves "Swifties."
-The video has already amassed over 13 million views on YouTube in less than 24 hours since it premiered.
-This version of the song has new lyrics, which spill some major tea about the relationship, "And I was never good at telling jokes but the punch line goes / I'll get older but your lovers stay my age / But I'm in a new hell every time you double-cross my mind / You said if we had been closer in age maybe it would have been fine / And that made me want to die."
-One telling lyric and scene is when Swift reveals that she was heartbroken on her 21st birthday, which slips perfectly into the Swift-Gyllenhaal dating timeline like a glove.
-She talked to Jimmy Fallon about her decision to re-record the song but has never confirmed that the song is about the actor. CNN has reached out to him for comment.
+Latest GitHub survey finds developers like automation, reusing code and remote work
+
+Software teams are metamorphosing the coding process to fit the new dynamics of remote work, according to GitHub's 2021 State of the Octoverse. That means reusing code, embracing automation and getting better at documentation. This research combines telemetry from more than 4 million repositories and a survey of about 12,000 developers.
+
+GitHub added 1.4 new contributors to open source work in 2021. The total number of first time contributors for open source projects is up this year as well to 3 million compared to 2.8 million in 2020. 
+
+Here's a look at what the report recommends for shipping software more quickly and keeping developer teams happy.
+
+How to build a good culture
+
+The report considered what practices and tools are the most important to building a strong sense of culture and collaboration at work and with open source projects. With work projects, easy to reuse code, code designed for reuse, automation and Westrum culture all contribute to software delivery performance. Westrum culture and code designed for reuse make it easy to collaborate with others. With open source projects, using automation to ship code is linked to feelings of fulfillment.
+Unsurprisingly, detailed code reviews had a negative impact on software delivery performance for both types of projects. 
+
+Coaching and mentoring are another building block of good culture. Teams that use friendly and timely code reviews for new contributors or new hires see a 46% improvement in productivity within open source projects, and a 16% improvement within companies. 
+
+Also, codes of conduct attract newcomers and contributors. Repositories with contribution guidelines and respectful language serve as welcome signs to encourage new people to contribute. 
+
+How to write code faster
+
+The research found that automating software delivery is important to open source work and helps teams go faster at scale. Teams that use Actions "merge almost 2x more pull requests per day than before (61% increase) and they merge 31% faster." The research also found that using this automation tool increases the number of merged pull requests by 36% and shrinks the time to merge by 33%. Company teams perform 43% better when using automation. Automation helps teams communicate better and more clearly, which also helps build a better culture, according to the report.
+
+Reuse is another key to make the development process go faster with performance increasing up to 87%. The key is avoiding entitlement procedures, access restrictions or information fragmentation because those barriers discourage reuse. Reuse also helps open source projects with double the performance improvement compared to processes that are slow or have multiple approval layers.
+
+Finally, investing in documentation has a direct impact on productivity. The research found that documentation gives developers a 50% increase in productivity. The analysis showed that documentation can signal that a repository is reliable, detailed and comes in different formats. Also, developers consider documentation trustworthy when it is up-to-date and has a high number of upvotes. Enterprises that share information through READMEs, guidelines and issues can support teamwork and internal initiatives. 
+
+Remote work becoming the norm
+
+Despite the preferences of managers and real estate commitments, only 11% of developers expect to return to the office, down 30% from the 41% who worked in an office before the pandemic. The survey also found that 46% of respondents who worked collocated now expect to be in a fully remote (20%) or hybrid (26%) environment. 
+
+The report authors note that open source developers are experts in shipping software with distributed teams and recommend merging pull requests, deploying code through pipelines and organizing work to make this work environment successful.
