@@ -74,8 +74,14 @@ void processing(void (* insertFunc)(char *)){
             word[indexInWord] = '\0';
             indexInWord = 0;
 
-            if (word[0] != '\0' && !isupper(word[0]) && !isStopWord(word)) {
-                insertFunc(word);
+            if (word[0] != '\0' && !isupper(word[0])) {
+                for (int i = 1; word[i]; i++){
+                    word[i] = tolower(word[i]);
+                }
+
+                if (!isStopWord(word)){
+                    insertFunc(word);   
+                }
             }
 
             if (c == '\n'){
