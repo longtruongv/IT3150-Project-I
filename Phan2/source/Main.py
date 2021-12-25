@@ -71,6 +71,8 @@ while vcap.isOpened():
         cv2.putText(img, 'Delete All', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
         drawing.deleteAll()
 
+    
+
     currTime = time.time()
     fps = 1 / (currTime - prevTime)
     prevTime = currTime
