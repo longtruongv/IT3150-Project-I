@@ -19,7 +19,7 @@ class DoodleDetector():
         X_data = []
         Y_data = []
 
-        self.labelNames = ["Can't detect"]
+        self.labelNames = []
 
         folderPath = "..\\data\\dataset\\doodleImages"
         datasetList = os.listdir(folderPath)
@@ -32,7 +32,7 @@ class DoodleDetector():
             for data in dataset:
                 data = data / 255.0
                 X_data.append(data)
-                Y_data.append(i+1)
+                Y_data.append(i)
 
         X_data = np.array(X_data)
         Y_data = np.array(Y_data)
@@ -70,11 +70,15 @@ class DoodleDetector():
     ## CLASSIFY ##
     ##############
 
-    def classify(self, numpyImg):
+    def classify(self, numpyImg, confidence=0.7):
         numpyImg = cropImage(numpyImg)
         numpyImg = numpyImg / 255.0
         prediction = self.model.predict(np.array([numpyImg]))[0]
-        return self.labelNames[np.argmax(prediction)]
+        
+        if (np.max(prediction) > confidence):
+            return self.labelNames[np.argmax(prediction)]
+        else:
+            return "Can't Detect"
     # End CLASSIFY
 
 
@@ -86,8 +90,6 @@ class DoodleDetector():
 
     def loadData(self):
         self.model = keras.models.load_model("..\\data\\model")
-        if self.model is not None:
-            print("hi")
         with open("..\\data\\model\\data.pkl", "rb") as input:
             # self.X_train, self.X_test, self.Y_train, self.Y_test, self.labelNames = pickle.load(input)
             self.labelNames = pickle.load(input)
@@ -142,7 +144,9 @@ def cropImage(numpyImg):
 
     roi = numpyImg[y: y + sqrSide, x: x + sqrSide, 0]
     roi = cv2.resize(roi, (28, 28), interpolation=cv2.INTER_AREA)
-    print(roi)
+
+    visualizeNumpyImg(roi)
+
     return roi.flatten()
 
 
@@ -154,5 +158,5 @@ def visualizeNumpyImg(croppedNumpyImg):
     plt.imshow(croppedNumpyImg)
     plt.colorbar()
     plt.grid(False)
-    plt.show()
+    plt.savefig("..\\data\\output\\visualize.png")
 

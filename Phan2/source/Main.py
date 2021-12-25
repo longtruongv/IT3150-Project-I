@@ -81,9 +81,9 @@ while vcap.isOpened():
 
     cv2.putText(img, "FPS: %d" % fps, (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 3)
 
-    cv2.imshow("Image", img)
+    cv2.imshow("Draw something", img)
     cv2.waitKey(20)
-    if cv2.getWindowProperty("Image", 4) < 1:
+    if cv2.getWindowProperty("Draw something", 4) < 1:
         break
 
 vcap.release()
