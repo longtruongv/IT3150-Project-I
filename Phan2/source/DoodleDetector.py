@@ -79,16 +79,30 @@ class DoodleDetector():
             return self.labelNames[np.argmax(prediction)]
         else:
             return "Can't Detect"
+
+    def classifyToArray(self, numpyImg, confidence=0.6):
+        numpyImg = cropImage(numpyImg)
+        numpyImg = numpyImg / 255.0
+        prediction = self.model.predict(np.array([numpyImg]))[0]
+        
+        indexArr = np.where(prediction > confidence)[0]
+        labelArr = []
+
+        for idx in indexArr:
+            labelArr.append(self.labelNames[idx])
+
+        print(labelArr)
+        return labelArr
     # End CLASSIFY
 
 
-    def saveData(self):
+    def saveModel(self):
         self.model.save("..\\data\\model")
         with open("..\\data\\model\\data.pkl", "wb") as output:
             # pickle.dump([self.X_train, self.X_test, self.Y_train, self.Y_test, self.labelNames], output)
             pickle.dump(self.labelNames, output)
 
-    def loadData(self):
+    def loadModel(self):
         self.model = keras.models.load_model("..\\data\\model")
         with open("..\\data\\model\\data.pkl", "rb") as input:
             # self.X_train, self.X_test, self.Y_train, self.Y_test, self.labelNames = pickle.load(input)

@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import math 
 
 class HandDetector():
     FINGER_THUMB = 0
@@ -80,3 +81,8 @@ class HandDetector():
             and self.isOpeningFinger(self.FINGER_MIDDLE) \
             and self.isOpeningFinger(self.FINGER_RING) \
             and self.isOpeningFinger(self.FINGER_PINKY)
+
+    def getEraserRadius(self):
+        xDist = self.landmarkList[8][0] - self.landmarkList[12][0]
+        yDist = self.landmarkList[8][1] - self.landmarkList[12][1]
+        return int(math.sqrt(xDist**2 + yDist**2) / 2)

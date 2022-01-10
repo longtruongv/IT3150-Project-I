@@ -1,8 +1,9 @@
 import cv2
 import time
 
-from HandDetector import HandDetector as hdt
+from HandDetector import HandDetector
 from Drawing import Drawing
+from DoodleDetector import DoodleDetector
 
 # For calculate FPS
 prevTime = 0
@@ -17,14 +18,21 @@ vcap.set(3, camWidth)
 vcap.set(4, camHeight)
 
 # Hand detector
-detector = hdt()
+handDetector = HandDetector()
 
 # Drawing
 drawing = Drawing(camWidth, camHeight)
 
+# Doodle detector
+doodleDetector = DoodleDetector()
+doodleDetector.loadModel()
+
+thumbUpFlag = False
+labelText = ""
+
 # Main loop
 while vcap.isOpened():
-    # Read camere
+    # Read camera
     success, img = vcap.read()
     img = cv2.flip(img, 1)
 
@@ -33,52 +41,73 @@ while vcap.isOpened():
         continue
 
     # Detect hand
-    img = detector.findHand(img)
-    detector.findPosition(img)
+    img = handDetector.findHand(img)
+    handDetector.findPosition(img)
 
 
-    if detector.isGesturePointing():
+    if handDetector.isGesturePointing():
         cv2.putText(img, 'Drawing', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
 
-        xCurr = detector.landmarkList[8][0]
-        yCurr = detector.landmarkList[8][1]
+        xCurr = handDetector.landmarkList[8][0]
+        yCurr = handDetector.landmarkList[8][1]
 
         drawing.draw(xCurr, yCurr, xPrev, yPrev)
         
         xPrev = xCurr
         yPrev = yCurr
 
-    elif detector.isGestureErase():
-        cv2.putText(img, 'Erasing', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
-        xCurr = int((detector.landmarkList[8][0] + detector.landmarkList[12][0]) / 2)
-        yCurr = int((detector.landmarkList[8][1] + detector.landmarkList[12][1]) / 2)
+        thumbUpFlag = False
 
-        drawing.erase(xCurr, yCurr, xPrev, yPrev)
-        cv2.circle(img, (xCurr, yCurr), 11, (0, 0, 0))
+    elif handDetector.isGestureErase():
+        cv2.putText(img, 'Erasing', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+        
+        xCurr = int((handDetector.landmarkList[8][0] + handDetector.landmarkList[12][0]) / 2)
+        yCurr = int((handDetector.landmarkList[8][1] + handDetector.landmarkList[12][1]) / 2)
+
+        eraserRadius = handDetector.getEraserRadius()
+        drawing.erase(xCurr, yCurr, xPrev, yPrev, eraserRadius)
+        cv2.circle(img, (xCurr, yCurr), eraserRadius, (0, 0, 0))
         
         xPrev = xCurr
         yPrev = yCurr
 
+        thumbUpFlag = False
+
     else:
         xPrev = -1
-        yPrev = -1 
+        yPrev = -1
 
-    if detector.isGestureThumbUp():
+
+    if handDetector.isGestureThumbUp():
         cv2.putText(img, 'Save Picture', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
-        drawing.save()
+        
+        if not thumbUpFlag:
+            labelText = doodleDetector.classify(drawing.imgCanvas)
+            doodleDetector.classifyToArray(drawing.imgCanvas)
 
-    if detector.isGestureAllOpen():
+            drawing.save()
+
+            thumbUpFlag = True
+
+
+    if handDetector.isGestureAllOpen():
         cv2.putText(img, 'Delete All', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+        labelText = ""
+
         drawing.deleteAll()
 
-    
+        thumbUpFlag = False
 
+    
     currTime = time.time()
     fps = 1 / (currTime - prevTime)
     prevTime = currTime
 
-    img = drawing.overlayOnTopOf(img)
+    imgInv = cv2.bitwise_not(drawing.imgCanvas)
+    img = cv2.bitwise_and(img, imgInv)
+    img = cv2.bitwise_or(img, drawing.imgCanvas)
 
+    cv2.putText(img, labelText, (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 255), 3)
     cv2.putText(img, "FPS: %d" % fps, (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 3)
 
     cv2.imshow("Draw something", img)
