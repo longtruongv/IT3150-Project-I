@@ -80,19 +80,19 @@ class DoodleDetector():
         else:
             return "Can't Detect"
 
-    def classifyToArray(self, numpyImg, confidence=0.6):
-        numpyImg = cropImage(numpyImg)
-        numpyImg = numpyImg / 255.0
-        prediction = self.model.predict(np.array([numpyImg]))[0]
+    # def classifyToArray(self, numpyImg, confidence=0.6):
+    #     numpyImg = cropImage(numpyImg)
+    #     numpyImg = numpyImg / 255.0
+    #     prediction = self.model.predict(np.array([numpyImg]))[0]
         
-        indexArr = np.where(prediction > confidence)[0]
-        labelArr = []
+    #     indexArr = np.where(prediction > confidence)[0]
+    #     labelArr = []
 
-        for idx in indexArr:
-            labelArr.append(self.labelNames[idx])
+    #     for idx in indexArr:
+    #         labelArr.append(self.labelNames[idx])
 
-        print(labelArr)
-        return labelArr
+    #     print(labelArr)
+    #     return labelArr
     # End CLASSIFY
 
 

@@ -80,10 +80,9 @@ while vcap.isOpened():
 
     if handDetector.isGestureThumbUp():
         cv2.putText(img, 'Save Picture', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
-        
+
         if not thumbUpFlag:
             labelText = doodleDetector.classify(drawing.imgCanvas)
-            doodleDetector.classifyToArray(drawing.imgCanvas)
 
             drawing.save()
 
@@ -103,8 +102,6 @@ while vcap.isOpened():
     fps = 1 / (currTime - prevTime)
     prevTime = currTime
 
-    imgInv = cv2.bitwise_not(drawing.imgCanvas)
-    img = cv2.bitwise_and(img, imgInv)
     img = cv2.bitwise_or(img, drawing.imgCanvas)
 
     cv2.putText(img, labelText, (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 255), 3)
