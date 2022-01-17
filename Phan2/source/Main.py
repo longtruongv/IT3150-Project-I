@@ -5,7 +5,7 @@ from HandDetector import HandDetector
 from Drawing import Drawing
 from DoodleDetector import DoodleDetector
 
-# For calculate FPS
+# Để tính toán FPS
 prevTime = 0
 currTime = 0
 
@@ -32,7 +32,7 @@ labelText = ""
 
 # Main loop
 while vcap.isOpened():
-    # Read camera
+    # Lấy ảnh từ camera
     success, img = vcap.read()
     img = cv2.flip(img, 1)
 
@@ -40,11 +40,12 @@ while vcap.isOpened():
         print("Ignoring empty camera frame.")
         continue
 
-    # Detect hand
+    # Nhận diện tay
     img = handDetector.findHand(img)
     handDetector.findPosition(img)
+    handDetector.calcuOpeningFingers()
 
-
+    # Xét các cử chỉ tay
     if handDetector.isGesturePointing():
         cv2.putText(img, 'Drawing', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
 
@@ -83,7 +84,6 @@ while vcap.isOpened():
 
         if not thumbUpFlag:
             labelText = doodleDetector.classify(drawing.imgCanvas)
-
             drawing.save()
 
             thumbUpFlag = True
@@ -91,8 +91,8 @@ while vcap.isOpened():
 
     if handDetector.isGestureAllOpen():
         cv2.putText(img, 'Delete All', (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+        
         labelText = ""
-
         drawing.deleteAll()
 
         thumbUpFlag = False
@@ -108,7 +108,7 @@ while vcap.isOpened():
     cv2.putText(img, "FPS: %d" % fps, (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 3)
 
     cv2.imshow("Draw something", img)
-    cv2.waitKey(20)
+    cv2.waitKey(1)
     if cv2.getWindowProperty("Draw something", 4) < 1:
         break
 
