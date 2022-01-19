@@ -8,11 +8,10 @@ class HandDetector():
     FINGER_MIDDLE = 2
     FINGER_RING = 3
     FINGER_PINKY = 4
-    FINGERS = [FINGER_THUMB, FINGER_INDEX, FINGER_MIDDLE, FINGER_RING, FINGER_PINKY]
 
     def __init__(self):
         self.mpHands = mp.solutions.hands
-        self.hands = self.mpHands.Hands()
+        self.hands = self.mpHands.Hands(max_num_hands=1)
         
         self.mpDraw = mp.solutions.drawing_utils
         self.mpDrawStyles = mp.solutions.drawing_styles

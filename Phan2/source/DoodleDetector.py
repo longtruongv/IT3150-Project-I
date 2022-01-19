@@ -1,3 +1,4 @@
+from cProfile import label
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 import tensorflow as tf
@@ -46,7 +47,7 @@ class DoodleDetector():
 
     def train(self, epochs=5):
         self.model = keras.Sequential([
-            keras.layers.Dense(256, activation=tf.nn.relu),
+            keras.layers.Dense(256, activation=tf.nn.relu, input_dim=784),
             keras.layers.Dense(128, activation=tf.nn.relu),
             keras.layers.Dense(len(self.labelNames), activation=tf.nn.softmax)
         ])
@@ -72,27 +73,12 @@ class DoodleDetector():
 
     def classify(self, numpyImg, confidence=0.7):
         numpyImg = cropImage(numpyImg)
-        numpyImg = numpyImg / 255.0
         prediction = self.model.predict(np.array([numpyImg]))[0]
         
         if (np.max(prediction) > confidence):
             return self.labelNames[np.argmax(prediction)]
         else:
             return "Can't Detect"
-
-    # def classifyToArray(self, numpyImg, confidence=0.6):
-    #     numpyImg = cropImage(numpyImg)
-    #     numpyImg = numpyImg / 255.0
-    #     prediction = self.model.predict(np.array([numpyImg]))[0]
-        
-    #     indexArr = np.where(prediction > confidence)[0]
-    #     labelArr = []
-
-    #     for idx in indexArr:
-    #         labelArr.append(self.labelNames[idx])
-
-    #     print(labelArr)
-    #     return labelArr
     # End CLASSIFY
 
 
@@ -127,10 +113,11 @@ def cropImage(numpyImg):
     numpyImg = cv2.copyMakeBorder(numpyImg, borderVert, borderVert, \
         borderHori, borderHori, cv2.BORDER_CONSTANT, value=(0, 0, 0))
 
-    # Chuyển về dạng đen trắng và tìm vị trí hình vẽ 
+    # Chuyển về dạng đen trắng
     gray = cv2.cvtColor(numpyImg, cv2.COLOR_BGR2GRAY)
     _, thresh_gray = cv2.threshold(gray, thresh=100, maxval=255, type=cv2.THRESH_BINARY)
 
+    # Tìm vị trí hình vẽ có contour lớn nhất
     contours, _ = cv2.findContours(thresh_gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
     max = (0, 0, 0, 0)
@@ -161,6 +148,7 @@ def cropImage(numpyImg):
 
     visualizeNumpyImg(roi)
 
+    roi = roi / 255.0
     return roi.flatten()
 
 
