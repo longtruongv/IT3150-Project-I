@@ -39,3 +39,5 @@
   - OpenCV: Xử lý hình ảnh.
   - MediaPipe Hands: Nhận diện bàn tay.
   - Tensorflow Keras: Xây dựng model phân loại hình vẽ.
+
+  Demo: https://youtu.be/yNzdZJ8wKHs
