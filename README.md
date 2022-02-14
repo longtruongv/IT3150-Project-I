@@ -1,4 +1,5 @@
 # IT3150 _ Đồ án 1 Khoa học máy tính 
+(Chi tiết trong báo cáo)
 ## Phần 1:
 ### Bài 1: Cài đặt các thuật toán Sắp xếp
   - Sắp xếp Nổi bọt (Bubble sort).
@@ -30,3 +31,11 @@
   Yêu cầu:
   - Input: File văn bản, file lưu các 'stop words'.
   - Output: In ra màn hình mỗi dòng gồm: từ khóa, số lần xuất hiện, các dòng mà từ đó xuất hiện.
+
+## Phần 2:
+  Mô tả: Khi chương trình thực thi sẽ nhận đầu vào là camera, thuật toán sẽ đọc hình ảnh để nhận diện bàn tay và cử chỉ của bàn tay đó, xác định các thao tác vẽ. Sau khi vẽ xong, hình vẽ sẽ được đưa vào phân loại và cho kết quả là nhãn của hình vẽ.
+  
+  Công nghệ sử dụng: Python
+  - OpenCV: Xử lý hình ảnh.
+  - MediaPipe Hands: Nhận diện bàn tay.
+  - Tensorflow Keras: Xây dựng model phân loại hình vẽ.
