@@ -2,7 +2,8 @@ from cProfile import label
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 import tensorflow as tf
-from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense, InputLayer, BatchNormalization, Dropout
 import numpy as np
 from sklearn.model_selection import train_test_split
 import pickle
@@ -46,11 +47,24 @@ class DoodleDetector():
     ###########
 
     def train(self, epochs=5):
-        self.model = keras.Sequential([
-            keras.layers.Dense(256, activation=tf.nn.relu, input_dim=784),
-            keras.layers.Dense(128, activation=tf.nn.relu),
-            keras.layers.Dense(len(self.labelNames), activation=tf.nn.softmax)
-        ])
+        self.model = Sequential()
+        self.model.add(InputLayer(input_shape=(28,28,1)))
+
+        self.model.add(Conv2D(16, (3, 3), activation='relu', strides=(1,1), padding='same'))
+        self.model.add(MaxPool2D(pool_size=(2, 2), padding='same'))
+
+        self.model.add(Conv2D(32, (3, 3), activation='relu', strides=(1,1), padding='same'))
+        self.model.add(MaxPool2D(pool_size=(2, 2), padding='same'))
+
+        self.model.add(Conv2D(64, (3, 3), activation='relu', strides=(1,1), padding='same'))
+        self.model.add(MaxPool2D(pool_size=(2, 2), padding='same'))
+
+        self.model.add(Flatten())
+        self.model.add(Dense(units=100, activation='relu'))
+        self.model.add(Dense(units=100, activation='relu'))
+        self.model.add(Dropout(0.25))
+
+        self.model.add(Dense(units=len(self.labelNames), activation='softmax'))
 
         self.model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
         self.model.fit(self.X_train, self.Y_train, epochs=epochs)
