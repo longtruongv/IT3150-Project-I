@@ -1,0 +1,56 @@
+Doodle Detector
+Epoch 1/10
+5625/5625 [==============================] - 235s 41ms/step - loss: 0.5056 - accuracy: 0.8519  
+Epoch 2/10
+5625/5625 [==============================] - 200s 36ms/step - loss: 0.2908 - accuracy: 0.9162
+Epoch 3/10
+5625/5625 [==============================] - 197s 35ms/step - loss: 0.2483 - accuracy: 0.9277
+Epoch 4/10
+5625/5625 [==============================] - 191s 34ms/step - loss: 0.2228 - accuracy: 0.9348
+Epoch 5/10
+5625/5625 [==============================] - 189s 34ms/step - loss: 0.2033 - accuracy: 0.9403
+Epoch 6/10
+5625/5625 [==============================] - 188s 33ms/step - loss: 0.1875 - accuracy: 0.9444
+Epoch 7/10
+5625/5625 [==============================] - 186s 33ms/step - loss: 0.1765 - accuracy: 0.9475
+Epoch 8/10
+5625/5625 [==============================] - 188s 33ms/step - loss: 0.1645 - accuracy: 0.9503
+Epoch 9/10
+5625/5625 [==============================] - 189s 34ms/step - loss: 0.1572 - accuracy: 0.9528
+Epoch 10/10
+5625/5625 [==============================] - 191s 34ms/step - loss: 0.1477 - accuracy: 0.9552
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d (Conv2D)             (None, 28, 28, 16)        160       
+                                                                 
+ max_pooling2d (MaxPooling2D  (None, 14, 14, 16)       0         
+ )                                                               
+                                                                 
+ conv2d_1 (Conv2D)           (None, 14, 14, 32)        4640      
+                                                                 
+ max_pooling2d_1 (MaxPooling  (None, 7, 7, 32)         0         
+ 2D)                                                             
+                                                                 
+ conv2d_2 (Conv2D)           (None, 7, 7, 64)          18496     
+                                                                 
+ max_pooling2d_2 (MaxPooling  (None, 4, 4, 64)         0         
+ 2D)                                                             
+                                                                 
+ flatten (Flatten)           (None, 1024)              0         
+                                                                 
+ dense (Dense)               (None, 100)               102500    
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dropout (Dropout)           (None, 100)               0         
+                                                                 
+ dense_2 (Dense)             (None, 20)                2020      
+                                                                 
+=================================================================
+Total params: 137,916
+Trainable params: 137,916
+Non-trainable params: 0
+_________________________________________________________________
+625/625 [==============================] - 7s 11ms/step - loss: 0.2441 - accuracy: 0.9393
